@@ -1,23 +1,16 @@
-
-
-const cityForm = document.querySelector('form');
-const card = document.querySelector('.card');
-const details = document.querySelector('.details');
-const time = document.querySelector('img.time');
-const icon = document.querySelector('.icon img');
-
-
+const cityForm = document.querySelector("form");
+const card = document.querySelector(".card");
+const details = document.querySelector(".details");
+const time = document.querySelector("img.time");
+const icon = document.querySelector(".icon img");
 
 const updateUI = (data) => {
-
   // const cityDetails = data.cityDetails;
   // const weather = data.weather;
 
-
   //destructure properties
 
-  const { cityDetails, weather} = data;
-
+  const { cityDetails, weather } = data;
 
   //update details template
 
@@ -32,12 +25,10 @@ const updateUI = (data) => {
   </div>
   `;
 
-
   //update images
 
-  const iconSrc= `img/icons/${weather.WeatherIcon}.svg`;
-  icon.setAttribute('src', iconSrc);
-
+  const iconSrc = `img/icons/${weather.WeatherIcon}.svg`;
+  icon.setAttribute("src", iconSrc);
 
   let timeSrc = null;
   timeSrc = weather.IsDayTime ? "img/day.svg" : "img/night.svg";
@@ -45,42 +36,35 @@ const updateUI = (data) => {
   //   timeSrc = 'img/day.svg';
   // }
   //   else{ timeSrc = 'img/night.svg';}
-  time.setAttribute('src', timeSrc);
+  time.setAttribute("src", timeSrc);
 
-
-
-//remove d-none if present
-if(card.classList.contains('d-none')){
-  card.classList.remove('d-none');
-}
+  //remove d-none if present
+  if (card.classList.contains("d-none")) {
+    card.classList.remove("d-none");
+  }
 };
 
 const updateCity = async (city) => {
   // console.log(city);
-const cityDetails = await getCity(city);
-const weather = await getWeather(cityDetails.Key);
+  const cityDetails = await getCity(city);
+  const weather = await getWeather(cityDetails.Key);
 
-return {
-  cityDetails: cityDetails,
-  weather: weather
-}
-
+  return {
+    cityDetails: cityDetails,
+    weather: weather,
+  };
 };
 
 //handle data submitted into form
-cityForm.addEventListener('submit', e => {
-    e.preventDefault();
+cityForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    //get city value
-    const city = cityForm.city.value.trim();
-    cityForm.reset();
+  //get city value
+  const city = cityForm.city.value.trim();
+  cityForm.reset();
 
-    //update UI with new city
-    updateCity(city)
-    .then(data=> updateUI(data))
-    .catch(err => console.log(err));
-    
-});   
- 
-
-
+  //update UI with new city
+  updateCity(city)
+    .then((data) => updateUI(data))
+    .catch((err) => console.log(err));
+});
